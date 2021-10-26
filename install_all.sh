@@ -2,7 +2,7 @@
 ###
  # @Author       : KK
  # @Date         : 2021-10-12 14:02:35
- # @LastEditTime : 2021-10-21 14:24:57
+ # @LastEditTime : 2021-10-26 11:05:02
  # @LastEditors  : KK
  # @Description  : Run all script
  # @FilePath     : \debian_install_script\install_all.sh
@@ -60,7 +60,7 @@ do
     if [[ (-n ${CONTINUE_INSTALL_SCRIPT_NAME}) && (${CONTINUE_INSTALL_SCRIPT_NAME} != ${shname}) ]] ; then continue ; fi
     CONTINUE_INSTALL_SCRIPT_NAME=''
     printf_color "Runing ${shname} script." ${TEXT_CYAN}
-    source ${SCRIPT_PATH}/${shname} || (log_error ${shname} && exit 1)
+    source ${SCRIPT_PATH}/${shname} || {log_error ${shname} ; exit 1}
     wait
 done
 
