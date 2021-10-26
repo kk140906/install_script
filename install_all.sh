@@ -2,7 +2,7 @@
 ###
  # @Author       : KK
  # @Date         : 2021-10-12 14:02:35
- # @LastEditTime : 2021-10-26 11:05:02
+ # @LastEditTime : 2021-10-26 15:25:52
  # @LastEditors  : KK
  # @Description  : Run all script
  # @FilePath     : \debian_install_script\install_all.sh
@@ -15,6 +15,42 @@ if [[ ${SCRIPT_PATH} == "." ]]
 then 
     SCRIPT_PATH=$(pwd)
 fi
+
+function change_to_user() {
+    usermod -aG sudo ${1}
+    mv ${SCRIPT_PATH} /home/${1}/
+    cd /home/${1}
+    su ${1}
+    printf "The install script be moved to ${1} home path.Rerunning install script from /home/${1}."
+    source /home/${1}/install_all.sh
+}
+
+if [[ $(whoami) == "root" ]]
+then 
+    apt install sudo
+    if [[ -n "$(which usermod)" ]]
+    then 
+        export PATH="/usr/sbin:${PATH}"
+    fi
+    # add user
+    users=($(cat /etc/passwd | awk -F : '$3>=1000 && $3<=65530' | cut -f 1 -d :))
+    if [[ ${#users[@]} -gt 1 ]]
+    then
+        num=1
+        for user in ${users[@]}
+        do
+            printf "%d) - %s\n" ${num} "${user}"
+            let num++
+        done
+        let num--
+        read -p "Input the number of default user. [1-${num}] " var
+        change_to_user ${users[${var}-1]}
+    elif [[ ${#users[@]} -eq 1 ]]
+    then
+        change_to_user ${users[0]}
+    fi
+fi
+
 
 source ${SCRIPT_PATH}/common.sh
 
