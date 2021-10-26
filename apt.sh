@@ -59,7 +59,7 @@ sudo apt install apt-transport-https ca-certificates -y
 
 if [[ ishttps -eq 1 ]]
 then 
-    update_url "http" "https" /etc/apt/sources.list
+    replace "http" "https" /etc/apt/sources.list
     sudo apt update && sudo apt upgrade -y
 fi
 

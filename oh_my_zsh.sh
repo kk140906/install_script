@@ -2,7 +2,7 @@
 ###
  # @Author       : KK
  # @Date         : 2021-10-12 15:03:33
- # @LastEditTime : 2021-10-21 14:19:10
+ # @LastEditTime : 2021-10-26 16:17:34
  # @LastEditors  : KK
  # @Description  : Install oh-my-zsh terminal
  # @FilePath     : \debian_install_script\oh_my_zsh.sh
@@ -32,7 +32,8 @@ printf_color "Downloading the oh-my-zsh install script." ${TEXT_GREEN}
 backup_exist  ${ZSH_INSTALL_SCRIPT_TEMP_PATH}
 # bash -c "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"
 wget --output-document ${ZSH_INSTALL_SCRIPT_TEMP_PATH} https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
-update_url ${GITHUB_SRC} ${GITHUB_MIRROR} ${ZSH_INSTALL_SCRIPT_TEMP_PATH}
+replace ${GITHUB_SRC} ${GITHUB_MIRROR} ${ZSH_INSTALL_SCRIPT_TEMP_PATH}
+replace "exec" "\#exec" ${ZSH_INSTALL_SCRIPT_TEMP_PATH}
 chmod +x ${ZSH_INSTALL_SCRIPT_TEMP_PATH}
 
 backup_exist ${ZSH_INSTALL_PATH}

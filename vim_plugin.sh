@@ -29,7 +29,7 @@ VIM_PLUG_SCRIPT_PATH=${HOME}/.vim/autoload/plug.vim
 backup_exist ${VIM_PLUG_SCRIPT_PATH}
 # https://gitee.com/yzymickey/vim-plug/raw/master/plug.vim
 bash -c "curl -fLo ${VIM_PLUG_SCRIPT_PATH} --create-dirs ${GITHUB_MIRROR_RAW}/junegunn/vim-plug/master/plug.vim"
-update_url ${GITHUB_SRC} ${GITHUB_MIRROR} ${VIM_PLUG_SCRIPT_PATH}
+replace ${GITHUB_SRC} ${GITHUB_MIRROR} ${VIM_PLUG_SCRIPT_PATH}
 
 
 # rebuild vim with python3
@@ -83,9 +83,9 @@ update_hosts "bitbucket.org" "104.192.141.1"
 backup_exist ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe
 git clone ${GITHUB_MIRROR}/ycm-core/YouCompleteMe.git ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe
 walk_submodule ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe
-update_url ${GITHUB_SRC} ${GITHUB_MIRROR} ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe/third_party/ycmd/cpp/CMakeLists.txt
-update_url ${GITHUB_SRC} ${GITHUB_MIRROR_DOWN} ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe/third_party/ycmd/cpp/ycm/CMakeLists.txt
-update_url ${GITHUB_SRC} ${GITHUB_MIRROR_DOWN} ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe/third_party/ycmd/build.py
+replace ${GITHUB_SRC} ${GITHUB_MIRROR} ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe/third_party/ycmd/cpp/CMakeLists.txt
+replace ${GITHUB_SRC} ${GITHUB_MIRROR_DOWN} ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe/third_party/ycmd/cpp/ycm/CMakeLists.txt
+replace ${GITHUB_SRC} ${GITHUB_MIRROR_DOWN} ${VIM_PLUGIN_MANUAL_PATH}/YouCompleteMe/third_party/ycmd/build.py
 export GOPROXY=${GO_PROXY}
 export RUSTUP_DIST_SERVER=${RUSTUP_DIST_MIRROR}
 export RUSTUP_UPDATE_ROOT=${RUSTUP_UPDATE_MIRROR}

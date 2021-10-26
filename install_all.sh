@@ -2,7 +2,7 @@
 ###
  # @Author       : KK
  # @Date         : 2021-10-12 14:02:35
- # @LastEditTime : 2021-10-26 15:25:52
+ # @LastEditTime : 2021-10-26 16:33:13
  # @LastEditors  : KK
  # @Description  : Run all script
  # @FilePath     : \debian_install_script\install_all.sh
@@ -20,9 +20,9 @@ function change_to_user() {
     usermod -aG sudo ${1}
     mv ${SCRIPT_PATH} /home/${1}/
     cd /home/${1}
+    printf "\033[31m Changing root to ${1}. Need to rerun install script from /home/${1}.\n\033[0m"
+    chown -R ${1}:${1} /home/${1}/install_scirpt
     su ${1}
-    printf "The install script be moved to ${1} home path.Rerunning install script from /home/${1}."
-    source /home/${1}/install_all.sh
 }
 
 if [[ $(whoami) == "root" ]]
@@ -96,7 +96,7 @@ do
     if [[ (-n ${CONTINUE_INSTALL_SCRIPT_NAME}) && (${CONTINUE_INSTALL_SCRIPT_NAME} != ${shname}) ]] ; then continue ; fi
     CONTINUE_INSTALL_SCRIPT_NAME=''
     printf_color "Runing ${shname} script." ${TEXT_CYAN}
-    source ${SCRIPT_PATH}/${shname} || {log_error ${shname} ; exit 1}
+    source ${SCRIPT_PATH}/${shname} || log_error ${shname} ; exit 1
     wait
 done
 
