@@ -2,16 +2,17 @@
 ###
  # @Author       : KK
  # @Date         : 2021-10-21 15:02:24
- # @LastEditTime : 2021-11-08 10:50:08
+ # @LastEditTime : 2021-11-09 13:12:19
  # @LastEditors  : KK
  # @Description  : Just for vps.
  # @FilePath     : \debian_install_script\shadowsocks_libev.sh
 ### 
 
 apt update
-read -p "\nSelect shadowsocks version:\n1):shaowsocks-libev\n2):shadowsocks-python" version
-read -p "\nInput your server port: " server_port
-read -p "\nInput your password: " password
+
+read -p $'Select shadowsocks version:\n1):shaowsocks-libev\n2):shadowsocks-python\nInput Version: ' version
+read -p $'Input your server port: ' server_port
+read -p $'Input your password: ' password
 
 case ${version} in 
 1)
@@ -29,6 +30,7 @@ case ${version} in
 }
 EOF
     systemctl start shadowsocks-libev.service
+    ;;
 2)
     apt install python3-pip libsodium* ufw -y
     pip install https://github.com/shadowsocks/shadowsocks/archive/master.zip -U
@@ -45,9 +47,11 @@ EOF
 }
 EOF
     ssserver -c /etc/shadowsocks.json -d start
+    ;;
 *)
     echo "invalid input"
     exit 1
+    ;;
 esac
 
 ufw allow ${server_port}
